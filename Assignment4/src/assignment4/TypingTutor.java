@@ -11,7 +11,7 @@ import java.awt.Font;
 import java.awt.event.KeyEvent;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
-
+import javax.swing.JTextArea;
 /**
  *
  * @author Alan Stewart, K00223375
@@ -20,24 +20,21 @@ public class TypingTutor extends javax.swing.JFrame {
 
     private JButton[] keyJButtons = new JButton[ KeyEvent.KEY_LAST  + 1 ];
     
-    private String[] fontNames = new String[6]; 
-    
+   
+    boolean boldOn=false;
+    boolean italicOn=false;
     Color buttonColor = Color.YELLOW;
     Color textColor = Color.BLACK;
-   
-    
+    int boldCount=0;
+    int italicCount=0;
+    float fontSize=12.0f;
     
     /**
      * Creates new form TypingTutor
      */
     public TypingTutor() {
         
-    fontNames[0]= "Arial Black";
-    fontNames[1]= "Helvetica";
-    fontNames[2]= "Cooper Black";
-    fontNames[3]= "Rockwell";
-    fontNames[4]= "Times New Roman";
-    fontNames[5]= "Comic Sans MS";
+    
     
         
         
@@ -188,9 +185,6 @@ public class TypingTutor extends javax.swing.JFrame {
         sizeFont12 = new javax.swing.JRadioButtonMenuItem();
         sizeFont16 = new javax.swing.JRadioButtonMenuItem();
         sizeFont20 = new javax.swing.JRadioButtonMenuItem();
-        typeMenu = new javax.swing.JMenu();
-        jRadioButtonMenuItem1 = new javax.swing.JRadioButtonMenuItem();
-        jRadioButtonMenuItem2 = new javax.swing.JRadioButtonMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -363,6 +357,11 @@ public class TypingTutor extends javax.swing.JFrame {
             displayMenu.setText("Display");
 
             clearText.setText("Clear Text");
+            clearText.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    clearTextActionPerformed(evt);
+                }
+            });
             displayMenu.add(clearText);
             displayMenu.add(jSeparator1);
 
@@ -389,6 +388,11 @@ public class TypingTutor extends javax.swing.JFrame {
             sytleMenu.setText("Style");
 
             boldMenuItem.setText("Bold");
+            boldMenuItem.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    boldMenuItemMouseClicked(evt);
+                }
+            });
             boldMenuItem.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     boldMenuItemActionPerformed(evt);
@@ -421,31 +425,23 @@ public class TypingTutor extends javax.swing.JFrame {
 
             buttonGroup1.add(sizeFont16);
             sizeFont16.setText("16");
+            sizeFont16.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    sizeFont16ActionPerformed(evt);
+                }
+            });
             sizeMenu.add(sizeFont16);
 
+            buttonGroup1.add(sizeFont20);
             sizeFont20.setText("20");
+            sizeFont20.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    sizeFont20ActionPerformed(evt);
+                }
+            });
             sizeMenu.add(sizeFont20);
 
             formatMenu.add(sizeMenu);
-
-            typeMenu.setText("Type");
-            buttonGroup2.add(typeMenu);
-
-            buttonGroup2.add(jRadioButtonMenuItem1);
-            jRadioButtonMenuItem1.setSelected(true);
-            jRadioButtonMenuItem1.setText("Aerial Black");
-            jRadioButtonMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    jRadioButtonMenuItem1ActionPerformed(evt);
-                }
-            });
-            typeMenu.add(jRadioButtonMenuItem1);
-
-            buttonGroup2.add(jRadioButtonMenuItem2);
-            jRadioButtonMenuItem2.setText("Cooper Black");
-            typeMenu.add(jRadioButtonMenuItem2);
-
-            formatMenu.add(typeMenu);
 
             jMenuBar1.add(formatMenu);
 
@@ -678,13 +674,50 @@ public class TypingTutor extends javax.swing.JFrame {
     }//GEN-LAST:event_jtaKeyReleased
 
     private void boldMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boldMenuItemActionPerformed
+        boldOn=true;
+        Font font;
         
-        Font font = new Font("Times New Roman", Font.BOLD,16);
+        boldCount++;
+        if(boldOn==true && boldCount%2==1)
+        {
+            italicCount++;
+            italicMenuItem.setSelected(false);
+            boldMenuItem.setSelected(boldOn);
+            font = new Font("Times New Roman", Font.BOLD,(int)fontSize);
+            boldOn=false;
+        }
+        else
+        {
+            boldOn=false;
+            boldMenuItem.setSelected(boldOn);
+            font = new Font("Times New Roman", Font.PLAIN,(int)fontSize);
+        }
+            
+        
         jta.setFont(font);
+        jta.setLineWrap(true);
+        jta.setWrapStyleWord(true);
+        
     }//GEN-LAST:event_boldMenuItemActionPerformed
 
     private void italicMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_italicMenuItemActionPerformed
-        Font font = new Font("Times New Roman", Font.ITALIC,16);
+        italicOn=true;
+        Font font;
+        
+        italicCount++;
+        if(italicOn==true && italicCount%2==1 )
+        {
+            boldCount++;
+            boldMenuItem.setSelected(false);
+            italicMenuItem.setSelected(italicOn);
+            font = new Font("Times New Roman", Font.ITALIC,(int)fontSize);
+        }
+        else
+        {   
+            italicOn=false;
+            italicMenuItem.setSelected(italicOn);
+            font = new Font("Times New Roman", Font.PLAIN,(int)fontSize);
+        }
         jta.setFont(font);
     }//GEN-LAST:event_italicMenuItemActionPerformed
 
@@ -735,15 +768,30 @@ public class TypingTutor extends javax.swing.JFrame {
     }//GEN-LAST:event_ButtonColourActionPerformed
 
     private void sizeFont12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sizeFont12ActionPerformed
-        
-        
-        
+        this.fontSize=12.0f;  
+        Font font = new Font("Times New Roman", Font.PLAIN, (int)fontSize);
+        jta.setFont(jta.getFont().deriveFont(fontSize));
     }//GEN-LAST:event_sizeFont12ActionPerformed
 
-    private void jRadioButtonMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem1ActionPerformed
-        Font font = new Font(fontNames[0],Font.PLAIN,12);
-        jta.setFont(font);
-    }//GEN-LAST:event_jRadioButtonMenuItem1ActionPerformed
+    private void boldMenuItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boldMenuItemMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_boldMenuItemMouseClicked
+
+    private void sizeFont16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sizeFont16ActionPerformed
+       this.fontSize=16.0f;  
+        Font font = new Font("Times New Roman", Font.PLAIN, (int)fontSize);
+        jta.setFont(jta.getFont().deriveFont(fontSize));
+    }//GEN-LAST:event_sizeFont16ActionPerformed
+
+    private void sizeFont20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sizeFont20ActionPerformed
+        this.fontSize=20.0f;  
+        Font font = new Font("Times New Roman", Font.PLAIN, (int)fontSize);
+        jta.setFont(jta.getFont().deriveFont(fontSize));
+    }//GEN-LAST:event_sizeFont20ActionPerformed
+
+    private void clearTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearTextActionPerformed
+        jta.setText("");
+    }//GEN-LAST:event_clearTextActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -807,8 +855,6 @@ public class TypingTutor extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
-    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JTextPane jta;
@@ -850,7 +896,6 @@ public class TypingTutor extends javax.swing.JFrame {
     private javax.swing.JButton tabButton;
     private javax.swing.JMenuItem textColour;
     private javax.swing.JButton tilButton;
-    private javax.swing.JMenu typeMenu;
     private javax.swing.JButton uButton;
     private javax.swing.JButton upButton;
     private javax.swing.JButton vButton;
