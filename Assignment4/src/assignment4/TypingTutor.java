@@ -676,11 +676,14 @@ public class TypingTutor extends javax.swing.JFrame {
     private void boldMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boldMenuItemActionPerformed
         boldOn=true;
         Font font;
-        
         boldCount++;
         if(boldOn==true && boldCount%2==1)
         {
-            italicCount++;
+            if(italicCount!=0)
+            {
+                italicCount++;
+            }
+            
             italicMenuItem.setSelected(false);
             boldMenuItem.setSelected(boldOn);
             font = new Font("Times New Roman", Font.BOLD,(int)fontSize);
@@ -705,7 +708,10 @@ public class TypingTutor extends javax.swing.JFrame {
         italicCount++;
         if(italicOn==true && italicCount%2==1 )
         {
-            boldCount++;
+            if(boldCount!=0)
+            {
+                boldCount++;
+            }
             boldMenuItem.setSelected(false);
             italicMenuItem.setSelected(italicOn);
             font = new Font("Times New Roman", Font.ITALIC,(int)fontSize);
