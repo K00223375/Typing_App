@@ -695,8 +695,6 @@ public class TypingTutor extends javax.swing.JFrame {
             
         
         jta.setFont(font);
-        jta.setLineWrap(true);
-        jta.setWrapStyleWord(true);
         
     }//GEN-LAST:event_boldMenuItemActionPerformed
 
