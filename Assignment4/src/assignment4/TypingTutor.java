@@ -5,9 +5,7 @@
  */
 package assignment4;
 
-import java.io.FileWriter;
-import java.io.PrintWriter;
-import java.io.IOException;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
