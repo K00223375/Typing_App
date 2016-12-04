@@ -5,13 +5,15 @@
  */
 package assignment4;
 
-
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.io.IOException;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
-import javax.swing.JTextArea;
+import java.util.prefs.Preferences;
 /**
  *
  * @author Alan Stewart, K00223375
@@ -29,12 +31,20 @@ public class TypingTutor extends javax.swing.JFrame {
     int italicCount=0;
     float fontSize=12.0f;
     
+    Preferences prefs = Preferences.userNodeForPackage(TypingTutor.class);
+
+    // Preference key name
+    final String colourButton= buttonColor.toString();
+    final String colourText= textColor.toString();  
+
+    
     /**
      * Creates new form TypingTutor
      */
     public TypingTutor() {
-        
-    
+           
+    prefs.put("Button_Color", colourButton);
+    prefs.put("Text_Color", colourText);
     
         
         
@@ -110,8 +120,6 @@ public class TypingTutor extends javax.swing.JFrame {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         buttonGroup2 = new javax.swing.ButtonGroup();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jta = new javax.swing.JTextPane();
         qButton = new javax.swing.JButton();
         wButton = new javax.swing.JButton();
         eButton = new javax.swing.JButton();
@@ -171,6 +179,9 @@ public class TypingTutor extends javax.swing.JFrame {
         leftButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jta = new javax.swing.JTextPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         displayMenu = new javax.swing.JMenu();
         clearText = new javax.swing.JMenuItem();
@@ -187,16 +198,6 @@ public class TypingTutor extends javax.swing.JFrame {
         sizeFont20 = new javax.swing.JRadioButtonMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jta.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtaKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtaKeyReleased(evt);
-            }
-        });
-        jScrollPane1.setViewportView(jta);
 
         qButton.setText("Q");
         qButton.addActionListener(new java.awt.event.ActionListener() {
@@ -354,6 +355,18 @@ public class TypingTutor extends javax.swing.JFrame {
 
             jLabel2.setText("Note: Clicking the buttons wiht your mouse will not perform any action.");
 
+            jta.addKeyListener(new java.awt.event.KeyAdapter() {
+                public void keyPressed(java.awt.event.KeyEvent evt) {
+                    jtaKeyPressed(evt);
+                }
+                public void keyReleased(java.awt.event.KeyEvent evt) {
+                    jtaKeyReleased(evt);
+                }
+            });
+            jScrollPane1.setViewportView(jta);
+
+            jScrollPane2.setViewportView(jScrollPane1);
+
             displayMenu.setText("Display");
 
             clearText.setText("Clear Text");
@@ -454,129 +467,127 @@ public class TypingTutor extends javax.swing.JFrame {
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane1)
                         .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addComponent(tilButton)
+                                    .addComponent(tabButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGap(0, 0, 0)
-                                    .addComponent(num1Button)
+                                    .addComponent(qButton)
                                     .addGap(0, 0, 0)
-                                    .addComponent(num2Button)
+                                    .addComponent(wButton)
                                     .addGap(0, 0, 0)
-                                    .addComponent(num3Button)
+                                    .addComponent(eButton)
                                     .addGap(0, 0, 0)
-                                    .addComponent(num4Button)
+                                    .addComponent(rButton)
                                     .addGap(0, 0, 0)
-                                    .addComponent(num5Button)
+                                    .addComponent(tButton)
                                     .addGap(0, 0, 0)
-                                    .addComponent(num6Button)
+                                    .addComponent(yButton)
                                     .addGap(0, 0, 0)
-                                    .addComponent(num7Button)
+                                    .addComponent(uButton)
                                     .addGap(0, 0, 0)
-                                    .addComponent(num8Button)
+                                    .addComponent(iButton)
                                     .addGap(0, 0, 0)
-                                    .addComponent(num9Button)
+                                    .addComponent(oButton)
                                     .addGap(0, 0, 0)
-                                    .addComponent(num0Button)
+                                    .addComponent(pButton)
                                     .addGap(0, 0, 0)
-                                    .addComponent(minusButton)
+                                    .addComponent(lbButton)
                                     .addGap(0, 0, 0)
-                                    .addComponent(plusButton)
+                                    .addComponent(rbButton)
                                     .addGap(0, 0, 0)
-                                    .addComponent(bsButton))
+                                    .addComponent(bslashButton))
                                 .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(tabButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addGap(0, 0, 0)
-                                            .addComponent(qButton)
-                                            .addGap(0, 0, 0)
-                                            .addComponent(wButton)
-                                            .addGap(0, 0, 0)
-                                            .addComponent(eButton)
-                                            .addGap(0, 0, 0)
-                                            .addComponent(rButton)
-                                            .addGap(0, 0, 0)
-                                            .addComponent(tButton)
-                                            .addGap(0, 0, 0)
-                                            .addComponent(yButton)
-                                            .addGap(0, 0, 0)
-                                            .addComponent(uButton)
-                                            .addGap(0, 0, 0)
-                                            .addComponent(iButton)
-                                            .addGap(0, 0, 0)
-                                            .addComponent(oButton)
-                                            .addGap(0, 0, 0)
-                                            .addComponent(pButton)
-                                            .addGap(0, 0, 0)
-                                            .addComponent(lbButton)
-                                            .addGap(0, 0, 0)
-                                            .addComponent(rbButton)
-                                            .addGap(0, 0, 0)
-                                            .addComponent(bslashButton))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(shiftButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(0, 0, 0)
-                                            .addComponent(zButton)
-                                            .addGap(0, 0, 0)
-                                            .addComponent(xButton)
-                                            .addGap(0, 0, 0)
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addGroup(layout.createSequentialGroup()
-                                                    .addComponent(cButton)
-                                                    .addGap(0, 0, 0)
-                                                    .addComponent(vButton)
-                                                    .addGap(0, 0, 0)
-                                                    .addComponent(bButton)
-                                                    .addGap(0, 0, 0)
-                                                    .addComponent(nButton)
-                                                    .addGap(0, 0, 0)
-                                                    .addComponent(mButton)
-                                                    .addGap(0, 0, 0)
-                                                    .addComponent(commaButton))
-                                                .addComponent(spaceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(periodButton)
-                                            .addGap(0, 0, 0)
-                                            .addComponent(qMarkButton)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                .addComponent(upButton)
-                                                .addGroup(layout.createSequentialGroup()
-                                                    .addComponent(leftButton)
-                                                    .addGap(0, 0, 0)
-                                                    .addComponent(downButton))))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(capsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(0, 0, 0)
-                                            .addComponent(aButton)
-                                            .addGap(0, 0, 0)
-                                            .addComponent(sButton)
-                                            .addGap(0, 0, 0)
-                                            .addComponent(dButton)
-                                            .addGap(0, 0, 0)
-                                            .addComponent(fButton)
-                                            .addGap(0, 0, 0)
-                                            .addComponent(gButton)
-                                            .addGap(0, 0, 0)
-                                            .addComponent(hButton)
-                                            .addGap(0, 0, 0)
-                                            .addComponent(jButton)
-                                            .addGap(0, 0, 0)
-                                            .addComponent(kButton)
-                                            .addGap(0, 0, 0)
-                                            .addComponent(LButton)
-                                            .addGap(0, 0, 0)
-                                            .addComponent(colButton)
-                                            .addGap(0, 0, 0)
-                                            .addComponent(quotButton)
-                                            .addGap(0, 0, 0)
-                                            .addComponent(enterButton)))
+                                    .addComponent(shiftButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(0, 0, 0)
-                                    .addComponent(rightButton))
-                                .addComponent(jLabel1)
-                                .addComponent(jLabel2))
-                            .addGap(0, 0, Short.MAX_VALUE)))
+                                    .addComponent(zButton)
+                                    .addGap(0, 0, 0)
+                                    .addComponent(xButton)
+                                    .addGap(0, 0, 0)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(cButton)
+                                            .addGap(0, 0, 0)
+                                            .addComponent(vButton)
+                                            .addGap(0, 0, 0)
+                                            .addComponent(bButton)
+                                            .addGap(0, 0, 0)
+                                            .addComponent(nButton)
+                                            .addGap(0, 0, 0)
+                                            .addComponent(mButton)
+                                            .addGap(0, 0, 0)
+                                            .addComponent(commaButton))
+                                        .addComponent(spaceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(periodButton)
+                                    .addGap(0, 0, 0)
+                                    .addComponent(qMarkButton)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(upButton)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(leftButton)
+                                            .addGap(0, 0, 0)
+                                            .addComponent(downButton))))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(capsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(0, 0, 0)
+                                    .addComponent(aButton)
+                                    .addGap(0, 0, 0)
+                                    .addComponent(sButton)
+                                    .addGap(0, 0, 0)
+                                    .addComponent(dButton)
+                                    .addGap(0, 0, 0)
+                                    .addComponent(fButton)
+                                    .addGap(0, 0, 0)
+                                    .addComponent(gButton)
+                                    .addGap(0, 0, 0)
+                                    .addComponent(hButton)
+                                    .addGap(0, 0, 0)
+                                    .addComponent(jButton)
+                                    .addGap(0, 0, 0)
+                                    .addComponent(kButton)
+                                    .addGap(0, 0, 0)
+                                    .addComponent(LButton)
+                                    .addGap(0, 0, 0)
+                                    .addComponent(colButton)
+                                    .addGap(0, 0, 0)
+                                    .addComponent(quotButton)
+                                    .addGap(0, 0, 0)
+                                    .addComponent(enterButton)))
+                            .addGap(0, 0, 0)
+                            .addComponent(rightButton))
+                        .addComponent(jLabel1)
+                        .addComponent(jLabel2)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(tilButton)
+                                .addGap(0, 0, 0)
+                                .addComponent(num1Button)
+                                .addGap(0, 0, 0)
+                                .addComponent(num2Button)
+                                .addGap(0, 0, 0)
+                                .addComponent(num3Button)
+                                .addGap(0, 0, 0)
+                                .addComponent(num4Button)
+                                .addGap(0, 0, 0)
+                                .addComponent(num5Button)
+                                .addGap(0, 0, 0)
+                                .addComponent(num6Button)
+                                .addGap(0, 0, 0)
+                                .addComponent(num7Button)
+                                .addGap(0, 0, 0)
+                                .addComponent(num8Button)
+                                .addGap(0, 0, 0)
+                                .addComponent(num9Button)
+                                .addGap(0, 0, 0)
+                                .addComponent(num0Button)
+                                .addGap(0, 0, 0)
+                                .addComponent(minusButton)
+                                .addGap(0, 0, 0)
+                                .addComponent(plusButton)
+                                .addGap(0, 0, 0)
+                                .addComponent(bsButton))))
                     .addContainerGap())
             );
             layout.setVerticalGroup(
@@ -587,8 +598,8 @@ public class TypingTutor extends javax.swing.JFrame {
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(jLabel2)
                     .addGap(20, 20, 20)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(21, 21, 21)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(tilButton)
                         .addComponent(num1Button)
@@ -860,6 +871,7 @@ public class TypingTutor extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JTextPane jta;
     private javax.swing.JButton kButton;
